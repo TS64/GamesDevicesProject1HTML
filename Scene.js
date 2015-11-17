@@ -6,6 +6,7 @@ var sceneArray =
 "Game Over Scene"];
 var currentSceneText;
 var currentSceneNum = 0;
+var gameOver = false;
 var titleImg = new Image();
 var titleX;
 var titleY;
@@ -13,6 +14,7 @@ var playingScene;
 var menuScene;
 var pauseScene;
 var gameOverScene;
+var quitScene;
 function Scene()
 {
 	
@@ -49,6 +51,8 @@ Scene.prototype.renderScene = function()
 		pauseScene.drawScene();
 	if (currentSceneNum == 3)
 		gameOverScene.drawScene();
+	if (currentSceneNum == 4)
+		quitScene.drawScene();
 }
 
 Scene.prototype.update = function()

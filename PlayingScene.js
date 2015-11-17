@@ -1,47 +1,88 @@
 
 var ctx;
 var canvas;
+
 var dieButtonImg = new Image();
 var pauseButtonImg = new Image();
 var bgPlayingImg = new Image();
+var playerImg = new Image();
+var mummyImg = new Image();
+var chestImg = new Image();
+
+var playerFrame;
+var enemyFrameX
+var enemyFrameY;
+
 var dieButtonX;
+var dieButtonY;
 var pauseButtonX;
 var pauseButtonY;
+
+var playerX;
+var playerY;
+var enemyArrayX = [40, 370, 370, 720];
+var enemyArrayY = [270, 50, 520, 270];
+var enemyDirectionX = [192, 0, 0, 192];
+var enemyDirectionY = [80, 80, 0, 0];	// Coordinates for sprites. 0,0 = Up; 192,0 = Left; 0,80 = Down; 192,80 = Right
+
 function PlayingScene()
 {
 	
+	dieButtonX = 800;
+	dieButtonY = 0;
+	pauseButtonX = 0;
+	pauseButtonY = 0;
+	playerFrame = 0;
+	enemyFrameX = 0;
+	enemyFrameY = 0;
+	playerX = 200;
+	playerY = 300;
+	playerImg.src = "PlayerSprite.png"
+	bgPlayingImg.src = "Room1bg.png";
+	dieButtonImg.src = "DieButton.png";
+	pauseButtonImg.src = "PauseButton.png";
+	mummyImg.src = "MummySprite.png";
+	chestImg.src = "Chest.png";
 }
 
 PlayingScene.prototype = new Scene();
 
 function initCanvas()
 {
-	canvas= document.createElement("canvas");
-	ctx = canvas.getContext("2d");
-
-	document.body.appendChild(canvas);
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 }
 
 PlayingScene.prototype.drawScene = function()
 {
-	ctx.save();
-	ctx.fillStyle = "white";
-	ctx.font = "italic 40pt Calibri";
-	ctx.textBaseline = "top";
-	ctx.fillText("This is the playing scene.", 0, 0);
-	ctx.restore();
-	console.log("Title Scene drawn")
-	dieButtonImg.src = "DieButton.png";
-	pauseButtonImg.src = "PauseButton.png";
-	bgPlayingImg.src = "BackgroundPlayingTemp.jpg"
-	dieButtonX = Math.round(canvas.width/2 - dieButtonImg.width/2);
-	pauseButtonX = 0;
-	pauseButtonY = 0;
-	ctx.drawImage(bgPlayingImg, 0, 0, canvas.width, canvas.height);
+	playerFrame++;
+	enemyFrameX++;
+	if (playerFrame >= 4)
+		playerFrame = 0;
+	if (enemyFrameX >= 4 && enemyFrameY == 0)
+	{
+		enemyFrameX = 0;
+		enemyFrameY = 1;
+	}
+	if (enemyFrameX >= 3 && enemyFrameY == 1)
+	{
+		enemyFrameX = 0;
+		enemyFrameY = 0;
+	}
+	console.log("Playing Scene drawn")
+	
+
+	ctx.drawImage(bgPlayingImg, 0, 0, 800, 600);
+	ctx.drawImage(chestImg, 370, 270);
+	//(Image, StartClippingX, StartClippingY, ClipWidth, ClipHeight, xPosition, yPosition, widthOfImage, heightOfImage)
+	ctx.drawImage(playerImg, playerFrame * 22, 0, 22, 44, playerX, playerY, 22, 44);
+	for (var i = 0; i <= 4; i++)
+	{
+		ctx.drawImage(mummyImg, enemyDirectionX[i] + (enemyFrameX * 48), enemyDirectionY[i] + (enemyFrameY * 40), 48, 40, enemyArrayX[i], enemyArrayY[i], 48, 40); //MummyUp
+	}
+	//ctx.drawImage(mummyImg, playerFrameX * 48, 40, 48, 40, playerX, playerY, 96, 80);
 	ctx.drawImage(pauseButtonImg, pauseButtonX, pauseButtonY);
-	ctx.drawImage(dieButtonImg, dieButtonX, 100);
+	ctx.drawImage(dieButtonImg, dieButtonX, dieButtonY);
 }
 
 PlayingScene.prototype.pauseGame = function(e) 
@@ -62,10 +103,11 @@ PlayingScene.prototype.killGame = function(e)
 	var cursorX = e.clientX;
 	var cursorY = e.clientY;
 	if (cursorX > dieButtonX && cursorX < dieButtonX + dieButtonImg.width && 
-		cursorY > 100 && cursorY < 100 + dieButtonImg.height &&
+		cursorY > dieButtonY && cursorY < dieButtonY + dieButtonImg.height &&
 		currentSceneNum == 1)
 	{
 		currentSceneNum = 3;
+		gameOver = true;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	}	
 }

@@ -21,5 +21,9 @@ function main()
 	window.addEventListener("click", playingScene.pauseGame);
 	window.addEventListener("click", playingScene.killGame);
 	window.addEventListener("click", pauseScene.resumeGame);
+	window.addEventListener("click", pauseScene.goToQuitScene);
 	window.addEventListener("click", gameOverScene.retryGame);
+	window.addEventListener("click", gameOverScene.goToQuitScene);
+	window.addEventListener("click", quitScene.goBackToPause);
+	window.addEventListener("click", quitScene.quitToTitle);
 }

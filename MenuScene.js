@@ -4,12 +4,15 @@ var canvas;
 var titleImg = new Image();
 var startButtonImg = new Image();
 var backgroundImg = new Image();
+var titleBgScaleX;
+var titleBgScaleY;
 var startButtonX;
+var startButtonY;
 var currentSceneNum;
 var menu = new MenuScene();
 function MenuScene()
 {
-	
+	startButtonY = 100;
 }
 
 function initCanvas()
@@ -31,7 +34,7 @@ MenuScene.prototype.drawScene = function()
 	startButtonX = Math.round(canvas.width/2 - startButtonImg.width/2);
 	ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
 	ctx.drawImage(titleImg, titleX, 0);
-	ctx.drawImage(startButtonImg, startButtonX, 100);
+	ctx.drawImage(startButtonImg, startButtonX, startButtonY);
 	console.log("Title Scene drawn")
 }
 
@@ -40,7 +43,7 @@ MenuScene.prototype.startGame = function(e)
 	var cursorX = e.clientX;
 	var cursorY = e.clientY;
 	if (cursorX > startButtonX && cursorX < startButtonX + startButtonImg.width && 
-		cursorY > 100 && cursorY < 100 + startButtonImg.height &&
+		cursorY > startButtonY && cursorY < startButtonY + startButtonImg.height &&
 		currentSceneNum == 0)
 	{
 		currentSceneNum = 1;
