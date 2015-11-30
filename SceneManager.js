@@ -32,4 +32,5 @@ SceneManager.prototype.nextScene = function()
 	}
 	console.log("Next scene.")
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx2.clearRect(0, 0, canvas.width, canvas.height);
 }

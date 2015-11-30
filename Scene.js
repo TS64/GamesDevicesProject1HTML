@@ -1,4 +1,5 @@
 var ctx;
+var ctx2;
 var canvas;
 var sceneArray = 
 ["Main Menu Scene", 
@@ -24,6 +25,8 @@ function initCanvas()
 {
 	canvas = document.createElement("canvas");
 	ctx = canvas.getContext("2d");
+	ctx2 = canvas.getContext("2d");
+
 
 	document.body.appendChild(canvas);
 	canvas.width = window.innerWidth;
@@ -38,6 +41,7 @@ Scene.prototype.startScene = function()
 Scene.prototype.stopScene = function()
 {
 	ctx.clearRect(0, 0, 500, 500);
+	ctx2.clearRect(0, 0, 500, 500);
 }
 
 Scene.prototype.renderScene = function()
@@ -45,8 +49,10 @@ Scene.prototype.renderScene = function()
 	
 	if (currentSceneNum == 0)
 		menuScene.drawScene();
-	if (currentSceneNum == 1)
+	if (currentSceneNum == 1) {
 		playingScene.drawScene();
+		playingScene.updatePlayerPos();
+	}
 	if (currentSceneNum == 2)
 		pauseScene.drawScene();
 	if (currentSceneNum == 3)

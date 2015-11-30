@@ -1,5 +1,6 @@
 
 var ctx;
+var ctx2;
 var canvas;
 var retryButtonImg = new Image();
 var quitButtonImg = new Image();
@@ -17,6 +18,7 @@ function initCanvas()
 {
 	canvas= document.createElement("canvas");
 	ctx = canvas.getContext("2d");
+	ctx2 = canvas.getContext("2d");
 
 	document.body.appendChild(canvas);
 	canvas.width = window.innerWidth;

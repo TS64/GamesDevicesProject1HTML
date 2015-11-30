@@ -4,6 +4,7 @@ var gameOverScene;
 var pauseScene;
 var quitScene;
 var ctx;
+var ctx2;
 var canvas;
 var currentScene;
 var scene;
@@ -32,6 +33,7 @@ Game.prototype.gameLoop = function()
 Game.prototype.draw = function()
 {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx2.clearRect(0, 0, canvas.width, canvas.height);
 	scene.renderScene();
 }
 
